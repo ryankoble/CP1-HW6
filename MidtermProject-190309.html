@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+<meta charset="utf-8" />
+</head>
+<body>
+<script>
+
+let circles = [];
+
+const n = 700;
+
+var d = 5;
+
+function keyPressed() {
+  if (key == '1') {
+    d = d + 10;
+  }
+  if (key == '2') {
+    d = d + 5;
+  }
+  if (key == '3') {
+    d = d + 10;
+  }
+  if (key == '4') {
+    d = d + 5;
+  }
+  if (key == '5') {
+    d = d + 15;
+  }
+  if (key == '6') {
+    d = d + 15;
+  }
+  if (key == '7') {
+    d = d + 10;
+  }
+  if (key == '8') {
+    d = d + 5;
+  }
+  if (key == '9') {
+    d = d + 10;
+  }
+  if (key == '0') {
+    d = d + 10;
+  }
+  if (key == '-') {
+    d = d + 15;
+  }
+  if (key == '=') {
+    d = d + 5;
+  }
+}
+
+function keyReleased() {
+  if (key == '1') {
+    d = d - 10;
+  }
+  if (key == '2') {
+    d = d - 5;
+  }
+  if (key == '3') {
+    d = d - 10;
+  }
+  if (key == '4') {
+    d = d - 5;
+  }
+  if (key == '5') {
+    d = d - 15;
+  }
+  if (key == '6') {
+    d = d - 15;
+  }
+  if (key == '7') {
+    d = d - 10;
+  }
+  if (key == '8') {
+    d = d - 5;
+  }
+  if (key == '9') {
+    d = d - 10;
+  }
+  if (key == '0') {
+    d = d - 10;
+  }
+  if (key == '-') {
+    d = d - 15;
+  }
+  if (key == '=') {
+    d = d - 5;
+  }
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+	colorMode(HSB);
+  background(255);
+	for (let i = 0; i < n; i++) {
+		circles.push({
+      x: (i/n)*width,
+      y: height/2,
+      vx: random(-0.25, 0.25),
+      vy: random(-0.5, 0.5)
+    });
+	}
+}
+
+
+
+function draw() {
+  // HSB: fully orange (hue of 30, sat & bri at 100%), 0.03 opacity
+  // stroke(30, 100, 100, 0.03);
+  stroke(0, 0.01);
+
+	for (let i = 0; i < circles.length; i++) {
+    // for each circle
+    let from = circles[i];
+		for (let j = i+1; j < circles.length; j++) {
+      let to = circles[j];
+			if (dist(from.x, from.y, to.x, to.y) < d) {
+				line(from.x, from.y, to.x, to.y);
+			}
+		}
+    move(from);
+	}
+}
+
+function move(circle) {
+  circle.x += circle.vx;
+  circle.y += circle.vy;
+
+  if (circle.x < -d || circle.y < -d || circle.x > width+d || circle.y > height+d) {
+    circles.splice(circles.indexOf(circle), 1);
+  }
+}
+
+
+
+// function windowResized() {
+//   resizeCanvas(windowWidth, windowHeight);
+// }
+
+</script>
+</body>
+</html>
